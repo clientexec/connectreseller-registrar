@@ -774,10 +774,10 @@ class PluginConnectreseller extends RegistrarPlugin
     public function getContactInformation($params)
     {
         $res = $this->getDomainInfoDetails($params);
-        $RegistrantContactId = substr($res["responseData"]['registrantContactId'], 3);  //
-        $AdminContactId = substr($res["responseData"]['adminContactId'], 3);  //
-        $BillingContactId = substr($res["responseData"]['billingContactId'], 3);  //
-        $TechnicalContactId = substr($res["responseData"]['technicalContactId'], 3);
+        $RegistrantContactId = $res["responseData"]['registrantContactId'];
+        $AdminContactId = $res["responseData"]['adminContactId'];
+        $BillingContactId = $res["responseData"]['billingContactId'];
+        $TechnicalContactId = $res["responseData"]['technicalContactId'];
 
         $ViewRegistrant = [
             'APIKey' => $params['API Key'],
@@ -981,7 +981,7 @@ class PluginConnectreseller extends RegistrarPlugin
             $data = [];
             $data['id'] = (int)$res["responseData"]['domainNameId'];
             $data['domain'] = (string)$res["responseData"]['websiteName'];
-            $data['expiration'] = ($res["responseData"]['expirationDate'] ? $res["responseData"]['expirationDate'] : 'N/A');
+            $data['expiration'] = ($res["responseData"]['expirationDate'] ? date('m/d/Y', intval($res["responseData"]['expirationDate'] / 1000)) : 'N/A');
             $data['registrationstatus'] = $res["responseData"]['Status'];
             $data['purchasestatus'] = $res["responseData"]['Status'];
             $data['autorenew'] = false;

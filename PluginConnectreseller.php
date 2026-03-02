@@ -108,13 +108,15 @@ class PluginConnectreseller extends RegistrarPlugin
                       $phonenumber = $params['RegistrantPhone'];
 
                       $AddClient = [
-                          'APIKey' => urlencode($params['API Key']),
-                          'UserName' => urlencode($RegistrantEmailAddress),
-                          'Password' => urlencode($Password),
-                          'CompanyName' => urlencode($companyname),
-                          'FirstName' => urlencode($firstname),
-                          'Address1' => urlencode($address1),
-                          'City' => urlencode($city),
+                          'APIKey' => $params['API Key'],
+                          'UserName' => $RegistrantEmailAddress,
+                          'Password' => $Password,
+                          'CompanyName' => $companyname,
+                          'Name' => $firstname.(($lastname != '')? ' '.$lastname : ''),
+                          'FirstName' => $firstname,
+                          'LastName' => $lastname,
+                          'Address1' => $address1,
+                          'City' => $city,
                           'StateName' => $state,
                           'CountryName' => $countryname,
                           'Zip' => $postcode,
@@ -366,18 +368,20 @@ class PluginConnectreseller extends RegistrarPlugin
                 $phonecc = $this->countryCodePhone($params['RegistrantCountry']);
                 $phonenumber = $params['RegistrantPhone'];
 
-                $AddClient['APIKey'] = urlencode($params['API Key']);
+                $AddClient['APIKey'] = $params['API Key'];
                 if ($tld == "us") {
                     $AddClient['appPurpose'] = "P2";
                     $AddClient['nexusCategory'] = "C31/CC"; //C32/CC
                     $AddClient['isUs'] = true;
                 }
-                $AddClient['UserName'] = urlencode($RegistrantEmailAddress);
-                $AddClient['Password'] = urlencode($Password);
-                $AddClient['CompanyName'] = urlencode($companyname);
-                $AddClient['FirstName'] = urlencode($firstname);
-                $AddClient['Address1'] = urlencode($address1);
-                $AddClient['City'] = urlencode($city);
+                $AddClient['UserName'] = $RegistrantEmailAddress;
+                $AddClient['Password'] = $Password;
+                $AddClient['CompanyName'] = $companyname;
+                $AddClient['Name'] = $firstname.(($lastname != '')? ' '.$lastname : '');
+                $AddClient['FirstName'] = $firstname;
+                $AddClient['LastName'] = $lastname;
+                $AddClient['Address1'] = $address1;
+                $AddClient['City'] = $city;
                 $AddClient['StateName'] = $state;
                 $AddClient['CountryName'] = $countryname;
                 $AddClient['Zip'] = $postcode;
@@ -902,7 +906,9 @@ class PluginConnectreseller extends RegistrarPlugin
             'Id' => $res["responseData"]['customerId'],
             'domainId' => $res["responseData"]['domainNameId'],
             'EmailAddress' => $params['Registrant_EmailAddress'],
-            'Name' => $params["Registrant_FirstName"],
+            'Name' => $params["Registrant_FirstName"].(($params["Registrant_LastName"] != '')? ' '.$params["Registrant_LastName"] : ''),
+            'FirstName' => $params["Registrant_FirstName"],
+            'LastName' => $params["Registrant_LastName"],
             'Address1' => $params["Registrant_Address1"],
             'City' => $params['Registrant_City'],
             'StateName' => $params["Registrant_StateProvince"],

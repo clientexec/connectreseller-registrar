@@ -6,7 +6,7 @@ class PluginConnectreseller extends RegistrarPlugin
 {
     public $features = [
         'nameSuggest' => true,
-        'importDomains' => true,
+        'importDomains' => false,
         'importPrices' => true,
     ];
 
